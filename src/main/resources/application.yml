@@ -2,24 +2,24 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: jdbc:mysql://121.36.10.98:3306/encMall?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://121.36.10.98:3306/ticketSys?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
     #    url: jdbc:mysql://localhost:3306/encMall?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
-    password: zxc12345
+    password: dbproject
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    type: com.alibaba.druid.pool.DruidDataSource
-
-  redis:
-    database: 0
-    host: 127.0.0.1
-    port: 6379
-    jedis:
-      pool:
-        max-active: 8
-        max-wait: -1
-        max-idle: 5
-        min-idel: 0
-    timeout: 10000
+#
+#  redis:
+#    database: 0
+#    host: 127.0.0.1
+#    port: 6379
+#    jedis:
+#      pool:
+#        max-active: 8
+#        max-wait: -1
+#        max-idle: 5
+#        min-idel: 0
+#    timeout: 10000
 
 server:
   port: 8088
@@ -29,6 +29,9 @@ server:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
+mybatis:
+#  config-location: classpath:/mybatis-config.xml
+  mapper-locations: classpath:mapper/*.xml
 
 
 # mysql server root dbproject
