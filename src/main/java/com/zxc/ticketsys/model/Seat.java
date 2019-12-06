@@ -4,8 +4,7 @@ import lombok.Data;
 
 @Data
 public class Seat {
-    private long seId;
-    private long trId;
+    private String trNo;
     private String seNo;
     private int seLev;
     private double sePrice;

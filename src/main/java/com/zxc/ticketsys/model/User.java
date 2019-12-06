@@ -7,9 +7,6 @@ public class User {
     private long userId;
     private String userName;
     private String passWord;
-    private String Name;
-    private String ID;
-    private String phone;
 
     public User(String userName, String passWord) {
         this.userName = userName;

@@ -30,3 +30,5 @@ server:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 
+
+# mysql server root dbproject

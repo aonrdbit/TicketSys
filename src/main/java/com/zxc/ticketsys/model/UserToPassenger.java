@@ -3,7 +3,7 @@ package com.zxc.ticketsys.model;
 import lombok.Data;
 
 @Data
-public class PassengerToSeat {
+public class UserToPassenger {
+    private long userId;
     private long psgId;
-    private long seId;
 }
