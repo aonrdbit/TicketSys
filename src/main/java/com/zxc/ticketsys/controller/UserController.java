@@ -61,8 +61,9 @@ public class UserController{
         return objectMapper.writeValueAsString(hs);
     }
 
-    @RequestMapping(value = "/passenger/all")
-    public String queryAllPassenger(@RequestBody Map<String,Object> para)throws JsonProcessingException{
+    @RequestMapping(value = "/passenger/all",method = RequestMethod.POST)
+    @ResponseBody
+    public String queryAllPassenger(@RequestBody Map<String,Object> para) throws JsonProcessingException {
         long userId=Integer.parseInt((String)para.get("userId"));
         List<Passenger> list=userService.queryAllPassenger(userId);
         HashMap<String,Object> hs=new HashMap<>();

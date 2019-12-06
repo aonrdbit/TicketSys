@@ -71,6 +71,7 @@ public class UserService {
      * @return
      */
     public List<Passenger> queryAllPassenger(long userId){
+        System.out.println(userId   );
         return userToPassengerDao.selectPassengerByUserId(userId);
     }
 }
