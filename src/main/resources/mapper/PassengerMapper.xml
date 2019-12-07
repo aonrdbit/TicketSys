@@ -9,4 +9,10 @@
     <select id="selectCountID" parameterType="java.lang.String" resultType="java.lang.Integer">
         select count(*) from passenger where ID=#{ID}
     </select>
+    <select id="selectPassengerInfoByPsgId" parameterType="java.lang.Long" resultType="com.zxc.ticketsys.model.Passenger">
+        select * from passenger where psgId=#{psgId};
+    </select>
+    <select id="selectPsgIdByID" parameterType="java.lang.String" resultType="java.lang.Long">
+        select psgId from passenger where ID=#{ID};
+    </select>
 </mapper>

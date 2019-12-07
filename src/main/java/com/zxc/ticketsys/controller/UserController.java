@@ -72,4 +72,18 @@ public class UserController{
         ObjectMapper objectMapper=new ObjectMapper();
         return objectMapper.writeValueAsString(hs);
     }
+
+    @RequestMapping(value = "/passenger/add",method = RequestMethod.POST)
+    @ResponseBody
+    public String addPassenger(@RequestBody Map<String,Object> para) throws JsonProcessingException {
+        long userId=Integer.parseInt((String)para.get("userId"));
+        String name=(String)para.get("Name");
+        String ID=(String)para.get("ID");
+        String phone=(String)para.get("phone");
+        boolean check=userService.addPassenger(userId,name,ID,phone);
+        HashMap<String,Object> hs=new HashMap<>();
+        hs.put("msg",check+"");
+        ObjectMapper objectMapper=new ObjectMapper();
+        return objectMapper.writeValueAsString(hs);
+    }
 }

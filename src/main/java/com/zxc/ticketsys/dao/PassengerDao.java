@@ -9,4 +9,6 @@ import java.util.List;
 public interface PassengerDao {
     public int insertPassenger(Passenger passenger);
     public int selectCountID(String ID);
+    public Passenger selectPassengerInfoByPsgId(long psgId);
+    public long selectPsgIdByID(String ID);
 }

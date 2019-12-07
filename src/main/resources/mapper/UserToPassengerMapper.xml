@@ -3,7 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zxc.ticketsys.dao.UserToPassengerDao">
-    <select id="selectPassengerByUserId" parameterType="java.lang.Long" resultType="com.zxc.ticketsys.model.Passenger">
-        select * from user_passenger where userId=#{userId};
+    <select id="selectPassengerByUserId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select psgId from user_passenger where userId=#{userId};
     </select>
+    <insert id="insertUserToPassenger" parameterType="com.zxc.ticketsys.model.UserToPassenger">
+        insert into user_passenger(userId,psgId) values(#{userId},#{psgId});
+    </insert>
 </mapper>

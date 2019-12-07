@@ -10,7 +10,9 @@ import com.zxc.ticketsys.utils.MD5;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -71,7 +73,41 @@ public class UserService {
      * @return
      */
     public List<Passenger> queryAllPassenger(long userId){
-        System.out.println(userId   );
-        return userToPassengerDao.selectPassengerByUserId(userId);
+        List<Long> psgIds=userToPassengerDao.selectPassengerByUserId(userId);
+        List<Passenger> passengers=new ArrayList<>();
+        for(int i=0;i<psgIds.size();i++){
+            Passenger passenger=passengerDao.selectPassengerInfoByPsgId(psgIds.get(i));
+            passenger.setIdx();
+            passengers.add(passenger);
+        }
+        return passengers;
+    }
+
+
+    /**
+     * 添加用户的常用联系人（乘客）
+     * 先根据身份证查询乘客是否已存在
+     * @param userId
+     * @param Name
+     * @param ID
+     * @param phone
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean addPassenger(long userId,String Name,String ID,String phone){
+        Passenger passenger=new Passenger(Name,ID,phone);
+        passenger.setIdx();
+        int cnt=passengerDao.selectCountID(ID);
+        if(cnt==0){
+            passengerDao.insertPassenger(passenger);
+        }
+        long psgId=passengerDao.selectPsgIdByID(ID);
+        List<Long> psgIds=userToPassengerDao.selectPassengerByUserId(userId);
+        if(!psgIds.contains(psgId)){
+            UserToPassenger userToPassenger=new UserToPassenger(userId,psgId);
+            userToPassengerDao.insertUserToPassenger(userToPassenger);
+            return true;
+        }
+        return false;
     }
 }
