@@ -19,11 +19,10 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
         response.setCharacterEncoding("utf-8");
         String token = request.getHeader("Authorization");
-        System.out.println(token);
         if(token != null){
             boolean result = TokenUtil.verify(token);
             if(result){
-                System.out.println("通过拦截器");
+//                System.out.println("通过拦截器");
                 return true;
             }
         }
