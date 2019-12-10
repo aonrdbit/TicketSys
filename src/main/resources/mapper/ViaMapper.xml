@@ -6,4 +6,10 @@
     <select id="selectAllTrNoFromStToEd" resultType="java.lang.String" parameterType="java.lang.String">
         select trNo from via where trNo in (select trNo from via where stationA=#{st}) and stationB=#{ed};
     </select>
+    <select id="selectTimeByTrNoAndEd" parameterType="java.lang.String" resultType="java.sql.Time">
+        select arrTime from via where trNo=#{trNo} and stationB=#{ed};
+    </select>
+    <select id="selectTimeByTrNoAndSt" parameterType="java.lang.String" resultType="java.sql.Time">
+        select staTime from via where trNo=#{trNo} and stationA=#{st};
+    </select>
 </mapper>

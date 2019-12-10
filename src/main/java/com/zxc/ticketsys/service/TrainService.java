@@ -4,9 +4,11 @@ import com.zxc.ticketsys.dao.StationDao;
 import com.zxc.ticketsys.dao.TrainDao;
 import com.zxc.ticketsys.dao.ViaDao;
 import com.zxc.ticketsys.model.Station;
+import com.zxc.ticketsys.utils.ComUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.text.Collator;
 import java.util.*;
 
@@ -60,9 +62,17 @@ public class TrainService {
         List<HashMap<String,Object>> list=new ArrayList<>();
         int siz=trNos.size();
         for(int i=0;i<siz;i++){
+            String trNo=trNos.get(i);
             HashMap<String,Object> hs=new HashMap<>();
             hs.put("trNo",trNos.get(i));
-            hs.put("trId",trainDao.selectTrIdByTrNoAndDate(trNos.get(i),date));
+            hs.put("trId",trainDao.selectTrIdByTrNoAndDate(trNo,date));
+            hs.put("st",st);
+            hs.put("ed",ed);
+            Time st_time=viaDao.selectTimeByTrNoAndSt(trNo,st);
+            Time ed_time=viaDao.selectTimeByTrNoAndEd(trNo,ed);
+            hs.put("st_time",st_time);
+            hs.put("ed_time",ed_time);
+            hs.put("dur", ComUtil.diffHour(st_time,ed_time));
             list.add(hs);
         }
         return list;

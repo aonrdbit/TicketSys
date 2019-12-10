@@ -1,5 +1,6 @@
 package com.zxc.ticketsys.utils;
 
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,4 +23,30 @@ public class ComUtil {
         String[] ss=s.split(" ");
         return sdf.parse(ss[3]+"-"+hs.get(ss[1])+"-"+ss[2]);
     }
+
+    public static String diffHour(Time begin, Time end) {
+        long i = begin.getTime();
+        long j = end.getTime();
+        String str="";
+        if(i>j){
+            j += 86400000l;
+            str="次日到达";
+        }else{
+            str="当日到达";
+        }
+        System.out.println((i-j)/1000);
+        long t=Math.abs(i-j)/1000;
+        long d=t/3600;
+        String ds=d+"";
+        if(d<10){
+            ds="0"+ds;
+        }
+        long m=(t%3600)/60;
+        String ms=m+"";
+        if(m<10){
+            ms="0"+m;
+        }
+        return ds+":"+ms+" "+str;
+    }
+
 }
