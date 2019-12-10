@@ -34,7 +34,6 @@ public class ComUtil {
         }else{
             str="当日到达";
         }
-        System.out.println((i-j)/1000);
         long t=Math.abs(i-j)/1000;
         long d=t/3600;
         String ds=d+"";

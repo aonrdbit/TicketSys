@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,19 @@ public class TrainController {
         String ed=(String)para.get("ed");
         String date= (String) para.get("date");
         List list=trainService.querySpeTrain(st,ed,ComUtil.strToDate(date));
+        HashMap<String,Object> hs=new HashMap<>();
+        hs.put("msg","true");
+        hs.put("list",list);
+        ObjectMapper objectMapper=new ObjectMapper();
+        return objectMapper.writeValueAsString(hs);
+    }
+
+    @RequestMapping(value = "/seat/all",method = RequestMethod.POST)
+    @ResponseBody
+    public String querySpeSeat(@RequestBody Map<String,Object>para)throws JsonProcessingException{
+        long trId=Long.parseLong((String)para.get("trId"));
+        System.out.println(trId);
+        List<HashMap<String,Object>> list=trainService.querySpeSeat(trId);
         HashMap<String,Object> hs=new HashMap<>();
         hs.put("msg","true");
         hs.put("list",list);

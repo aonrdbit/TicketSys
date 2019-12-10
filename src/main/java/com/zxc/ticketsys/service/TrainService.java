@@ -2,8 +2,10 @@ package com.zxc.ticketsys.service;
 
 import com.zxc.ticketsys.dao.StationDao;
 import com.zxc.ticketsys.dao.TrainDao;
+import com.zxc.ticketsys.dao.TrainToSeatDao;
 import com.zxc.ticketsys.dao.ViaDao;
 import com.zxc.ticketsys.model.Station;
+import com.zxc.ticketsys.model.TrainToSeat;
 import com.zxc.ticketsys.utils.ComUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class TrainService {
     private ViaDao viaDao;
     @Autowired
     private TrainDao trainDao;
+    @Autowired
+    private TrainToSeatDao trainToSeatDao;
 
     /**
      * 查询所有车站信息，按拼音排序
@@ -63,9 +67,10 @@ public class TrainService {
         int siz=trNos.size();
         for(int i=0;i<siz;i++){
             String trNo=trNos.get(i);
+            long trId=trainDao.selectTrIdByTrNoAndDate(trNo,date);
             HashMap<String,Object> hs=new HashMap<>();
             hs.put("trNo",trNos.get(i));
-            hs.put("trId",trainDao.selectTrIdByTrNoAndDate(trNo,date));
+            hs.put("trId",trId);
             hs.put("st",st);
             hs.put("ed",ed);
             Time st_time=viaDao.selectTimeByTrNoAndSt(trNo,st);
@@ -73,8 +78,37 @@ public class TrainService {
             hs.put("st_time",st_time);
             hs.put("ed_time",ed_time);
             hs.put("dur", ComUtil.diffHour(st_time,ed_time));
+            hs.put("fir",trainToSeatDao.selectSeatCntByTrId(trId,1));
+            hs.put("sec",trainToSeatDao.selectSeatCntByTrId(trId,2));
             list.add(hs);
         }
         return list;
     }
+
+    /**
+     * 查询座位信息
+     * @param trId
+     * @return
+     */
+    public List<HashMap<String,Object>> querySpeSeat(Long trId){
+        List<TrainToSeat> seats=trainToSeatDao.selectSeatByTrId(trId);
+        ArrayList<HashMap<String,Object>> list=new ArrayList<>();
+        for(int i=1;i<=4;i++){
+            HashMap<String,Object> hs=new HashMap<>();
+            hs.put("cx",i);
+            ArrayList<HashMap<String,Object>> son=new ArrayList<>();
+            for(int j=1;j<=80;j++){
+                HashMap<String,Object> ss=new HashMap<>();
+                TrainToSeat trainToSeat=seats.get((i-1)*80+j-1);
+                ss.put("seNo",trainToSeat.getSeNo());
+                ss.put("status",trainToSeat.getStatus()==0);
+                ss.put("check",false);
+                son.add(ss);
+            }
+            hs.put("ss",son);
+            list.add(hs);
+        }
+        return list;
+    }
+
 }
