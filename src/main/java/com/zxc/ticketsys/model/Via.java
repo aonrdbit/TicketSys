@@ -9,6 +9,7 @@ public class Via {
     private String trNo;
     private String stationA;
     private String stationB;
+    private int idx;
     private Time arrTime;
     private int dwellTime;
     private double firPrice;
