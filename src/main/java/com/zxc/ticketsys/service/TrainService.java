@@ -56,6 +56,7 @@ public class TrainService {
      * 4. 查st的出发时间
      * 5. 计算历时
      * 6. 根据trId查train_seat看有没有座位
+     * 7. 计算价格，先根据车次起点计算第一段价格，同时查询第一段终点，以终点为起点再计算价格，直到终点为ed
      * @param st
      * @param ed
      * @param date
@@ -80,6 +81,16 @@ public class TrainService {
             hs.put("dur", ComUtil.diffHour(st_time,ed_time));
             hs.put("fir",trainToSeatDao.selectSeatCntByTrId(trId,1));
             hs.put("sec",trainToSeatDao.selectSeatCntByTrId(trId,2));
+            double firPrice=viaDao.selectFirPriceByTrNoAndSt(trNo,st);
+            double secPrice=viaDao.selectSecPriceByTrNoAndSt(trNo,st);
+            String temp_ed=viaDao.selectEdByTrNoAndSt(trNo,st);
+            while(!(temp_ed.equals(ed))){
+                firPrice+=viaDao.selectFirPriceByTrNoAndSt(trNo,temp_ed);
+                secPrice+=viaDao.selectSecPriceByTrNoAndSt(trNo,temp_ed);
+                temp_ed=viaDao.selectEdByTrNoAndSt(trNo,temp_ed);
+            }
+            hs.put("firPrice",firPrice);
+            hs.put("secPrice",secPrice);
             list.add(hs);
         }
         return list;
@@ -110,5 +121,4 @@ public class TrainService {
         }
         return list;
     }
-
 }

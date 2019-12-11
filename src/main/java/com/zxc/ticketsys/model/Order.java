@@ -13,4 +13,12 @@ public class Order {
     private double totalCost;
     private Date creTime;
     private int status;
+
+    public Order(long trId, String stSta, String edSta, double totalCost) {
+        this.trId = trId;
+        this.stSta = stSta;
+        this.edSta = edSta;
+        this.totalCost = totalCost;
+        this.creTime=new Date();
+    }
 }

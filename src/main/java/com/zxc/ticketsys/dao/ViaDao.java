@@ -10,4 +10,7 @@ public interface ViaDao {
     public List<String> selectAllTrNoFromStToEd(String st,String ed);
     public Time selectTimeByTrNoAndEd(String trNo,String ed);
     public Time selectTimeByTrNoAndSt(String trNo,String st);
+    public String selectEdByTrNoAndSt(String trNo,String st);
+    public Double selectFirPriceByTrNoAndSt(String trNo,String st);
+    public Double selectSecPriceByTrNoAndSt(String trNo,String st);
 }

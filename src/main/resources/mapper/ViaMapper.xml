@@ -12,4 +12,13 @@
     <select id="selectTimeByTrNoAndSt" parameterType="java.lang.String" resultType="java.sql.Time">
         select staTime from via where trNo=#{trNo} and stationA=#{st};
     </select>
+    <select id="selectEdByTrNoAndSt" parameterType="java.lang.String" resultType="java.lang.String">
+        select stationB from via where trNo=#{trNo} and stationA=#{st};
+    </select>
+    <select id="selectFirPriceByTrNoAndSt" parameterType="java.lang.String" resultType="java.lang.Double">
+        select firPrice from via where trNo=#{trNo} and stationA=#{st};
+    </select>
+    <select id="selectSecPriceByTrNoAndSt" parameterType="java.lang.String" resultType="java.lang.Double">
+        select secPrice from via where trNo=#{trNo} and stationA=#{st};
+    </select>
 </mapper>
