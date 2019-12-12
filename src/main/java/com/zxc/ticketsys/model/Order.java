@@ -14,6 +14,10 @@ public class Order {
     private Date creTime;
     private int status;
 
+    public Order(){
+
+    }
+
     public Order(long trId, String stSta, String edSta, double totalCost) {
         this.trId = trId;
         this.stSta = stSta;
@@ -21,4 +25,6 @@ public class Order {
         this.totalCost = totalCost;
         this.creTime=new Date();
     }
+
+
 }

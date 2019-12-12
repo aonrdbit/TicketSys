@@ -5,8 +5,10 @@ import com.zxc.ticketsys.dao.TrainDao;
 import com.zxc.ticketsys.dao.TrainToSeatDao;
 import com.zxc.ticketsys.dao.ViaDao;
 import com.zxc.ticketsys.model.Station;
+import com.zxc.ticketsys.model.Train;
 import com.zxc.ticketsys.model.TrainToSeat;
 import com.zxc.ticketsys.utils.ComUtil;
+import com.zxc.ticketsys.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,19 +100,40 @@ public class TrainService {
 
     /**
      * 查询座位信息
+     * //慢的一比。。
      * @param trId
+     * @param st
+     * @param ed
      * @return
      */
-    public List<HashMap<String,Object>> querySpeSeat(Long trId){
-        List<TrainToSeat> seats=trainToSeatDao.selectSeatByTrId(trId);
+    public List<HashMap<String,Object>> querySpeSeat(Long trId,String st,String ed){
+        //车厢座位都是固定的，只需重新设置trId和status(查询这个seNo是否在st到ed之间的status都为1)
+        List<TrainToSeat> seats=new ArrayList<>();
+        String trNo=trainDao.selectTrNoByTrId(trId);
+        int seIdx=viaDao.selectIdxByTrNoAndSt(trNo,st);
+        int edIdx=viaDao.selectIdxByTrNoAndEd(trNo,ed);
+        //查该trId的每个座位status为1是哪些段
+        for(int len=Constant.seNos.size(),i=0;i<len;i++){
+            String s=Constant.seNos.get(i);
+            TrainToSeat trainToSeat=new TrainToSeat(trId,s,0);
+            trainToSeat.setStatus(1);
+            List<Integer> list=trainToSeatDao.selectIdxByTrIdAndSeNo(trId,s);
+            for(int j=seIdx;j<=edIdx;j++){
+                if(!list.contains(j)){
+                    trainToSeat.setStatus(0);
+                    break;
+                }
+            }
+            seats.add(trainToSeat);
+        }
         ArrayList<HashMap<String,Object>> list=new ArrayList<>();
         for(int i=1;i<=4;i++){
             HashMap<String,Object> hs=new HashMap<>();
             hs.put("cx",i);
             ArrayList<HashMap<String,Object>> son=new ArrayList<>();
-            for(int j=1;j<=80;j++){
+            for(int j=1;j<=40;j++){
                 HashMap<String,Object> ss=new HashMap<>();
-                TrainToSeat trainToSeat=seats.get((i-1)*80+j-1);
+                TrainToSeat trainToSeat=seats.get((i-1)*40+j-1);
                 ss.put("seNo",trainToSeat.getSeNo());
                 ss.put("status",trainToSeat.getStatus()==0);
                 ss.put("check",false);

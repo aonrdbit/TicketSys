@@ -42,9 +42,9 @@ public class TokenUtil {
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(TOKEN_SECRET)).withIssuer("auth0").build();
             DecodedJWT jwt = verifier.verify(token);
-            System.out.println("认证通过：");
-            System.out.println("username: " + jwt.getClaim("username").asString());
-            System.out.println("过期时间：      " + jwt.getExpiresAt());
+//            System.out.println("认证通过：");
+//            System.out.println("username: " + jwt.getClaim("username").asString());
+//            System.out.println("过期时间：      " + jwt.getExpiresAt());
             return true;
         } catch (Exception e){
             return false;

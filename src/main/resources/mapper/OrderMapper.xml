@@ -4,6 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zxc.ticketsys.dao.OrderDao">
     <insert id="insertOrder" useGeneratedKeys="true" keyProperty="orId" parameterType="com.zxc.ticketsys.model.Order">
-        insert into `order` values(#{trId},#{stSta},#{edSta},#{totalCost},#{creTime});
+        insert into `order` (trId,stSta,edSta,totalCost,creTime) values(#{trId},#{stSta},#{edSta},#{totalCost},#{creTime});
     </insert>
+    <select id="selectAllOrderByUserId" resultType="com.zxc.ticketsys.model.Order">
+        select * from `order` where orId in (select orId from user_order where userId=#{userId});
+    </select>
 </mapper>

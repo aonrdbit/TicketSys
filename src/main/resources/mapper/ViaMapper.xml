@@ -21,4 +21,10 @@
     <select id="selectSecPriceByTrNoAndSt" parameterType="java.lang.String" resultType="java.lang.Double">
         select secPrice from via where trNo=#{trNo} and stationA=#{st};
     </select>
+    <select id="selectIdxByTrNoAndSt" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select idx from via where trNo=#{trNo} and stationA=#{st};
+    </select>
+    <select id="selectIdxByTrNoAndEd" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select idx from via where trNo=#{trNo} and stationB=#{ed};
+    </select>
 </mapper>

@@ -10,4 +10,7 @@ import java.util.List;
 public interface TrainToSeatDao {
     public int selectSeatCntByTrId(@Param("trId") long trId, @Param("lev") int lev);
     public List<TrainToSeat> selectSeatByTrId(@Param("trId") long trId);
+    public List<Integer> selectIdxByTrIdAndSeNo(@Param("trId") long trId,
+                                                @Param("seNo") String seNo);
+    public int updateTrainToSeat(TrainToSeat trainToSeat);
 }

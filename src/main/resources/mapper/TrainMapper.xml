@@ -6,4 +6,10 @@
     <select id="selectTrIdByTrNoAndDate" resultType="java.lang.Long">
         select trId from train where trNo=#{trNo} and trDate=#{date};
     </select>
+    <select id="selectTrNoByTrId" parameterType="java.lang.Long" resultType="java.lang.String">
+        select trNo from train where trId=#{trId};
+    </select>
+    <select id="selectDateByTrId" parameterType="java.lang.Long" resultType="java.util.Date">
+        select trDate from train where trId=#{trId};
+    </select>
 </mapper>

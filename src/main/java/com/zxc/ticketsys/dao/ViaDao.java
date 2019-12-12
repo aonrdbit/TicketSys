@@ -1,6 +1,8 @@
 package com.zxc.ticketsys.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Property;
 
 import java.sql.Time;
 import java.util.List;
@@ -13,4 +15,6 @@ public interface ViaDao {
     public String selectEdByTrNoAndSt(String trNo,String st);
     public Double selectFirPriceByTrNoAndSt(String trNo,String st);
     public Double selectSecPriceByTrNoAndSt(String trNo,String st);
+    public Integer selectIdxByTrNoAndSt(String trNo,String st);
+    public Integer selectIdxByTrNoAndEd(String trNo,String ed);
 }

@@ -15,4 +15,7 @@
     <select id="selectPsgIdByID" parameterType="java.lang.String" resultType="java.lang.Long">
         select psgId from passenger where ID=#{ID};
     </select>
+    <delete id="delPassengerBy" parameterType="java.lang.Long">
+        delete from passenger where psgId=#{psgId};
+    </delete>
 </mapper>

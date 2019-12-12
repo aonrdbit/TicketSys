@@ -50,8 +50,12 @@ public class TrainController {
     @ResponseBody
     public String querySpeSeat(@RequestBody Map<String,Object>para)throws JsonProcessingException{
         long trId=Long.parseLong((String)para.get("trId"));
-        System.out.println(trId);
-        List<HashMap<String,Object>> list=trainService.querySpeSeat(trId);
+        String st=(String)para.get("st");
+        String ed=(String)para.get("ed");
+        double s=System.currentTimeMillis();
+        List<HashMap<String,Object>> list=trainService.querySpeSeat(trId,st,ed);
+        double e=System.currentTimeMillis();
+        System.out.println((e-s)+"ms");
         HashMap<String,Object> hs=new HashMap<>();
         hs.put("msg","true");
         hs.put("list",list);

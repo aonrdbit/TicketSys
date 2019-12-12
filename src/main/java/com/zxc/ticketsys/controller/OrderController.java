@@ -6,10 +6,12 @@ import com.zxc.ticketsys.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -33,9 +35,42 @@ public class OrderController {
         String date=(String)para.get("date");
         ArrayList<HashMap<String,Object>> list=(ArrayList<HashMap<String,Object>>)para.get("psgs");
         System.out.println(trId+" "+trNo+" "+st+" "+ed+" "+firPrice+" "+secPrice+" "+date);
-//        boolean check=orderService.addOrder(userId,trId,st,ed,tot,list);
-        hs.put("msg","true");
+        boolean check=orderService.addOrder(userId,trId,trNo,st,ed,tot,list);
+        hs.put("msg",check+"");
         ObjectMapper objectMapper=new ObjectMapper();
         return objectMapper.writeValueAsString(hs);
+    }
+
+    @RequestMapping("/all")
+    @ResponseBody
+    public String queryALlOrder(@RequestBody Map<String,Object> para)throws JsonProcessingException {
+        long userId=Long.parseLong((String)para.get("userId"));
+        List<HashMap<String,Object>> list=orderService.queryAllOrder(userId);
+        HashMap<String,Object> hs=new HashMap<>();
+        hs.put("msg","true");
+        hs.put("list",list);
+        ObjectMapper objectMapper=new ObjectMapper();
+        return objectMapper.writeValueAsString(hs);
+    }
+
+    @RequestMapping("/del")
+    public String delOrder(@RequestBody Map<String,Object> para)throws JsonProcessingException {
+//        HashMap<String,Object> hs=new HashMap<>();
+//        long userId=Long.parseLong((String)para.get("userId"));
+//        long trId=Long.parseLong((String)para.get("trId"));
+//        String trNo=(String)para.get("trNo");
+//        String st=(String)para.get("st");
+//        String ed=(String)para.get("ed");
+//        double firPrice=Double.parseDouble((String)para.get("firPrice"));
+//        double secPrice=Double.parseDouble((String)para.get("secPrice"));
+//        double tot=Double.parseDouble((String)para.get("tot"));
+//        String date=(String)para.get("date");
+//        ArrayList<HashMap<String,Object>> list=(ArrayList<HashMap<String,Object>>)para.get("psgs");
+//        System.out.println(trId+" "+trNo+" "+st+" "+ed+" "+firPrice+" "+secPrice+" "+date);
+//        boolean check=orderService.addOrder(userId,trId,trNo,st,ed,tot,list);
+//        hs.put("msg",check+"");
+//        ObjectMapper objectMapper=new ObjectMapper();
+//        return objectMapper.writeValueAsString(hs);
+        return "";
     }
 }

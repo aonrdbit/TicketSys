@@ -110,4 +110,11 @@ public class UserService {
         }
         return false;
     }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean delPassenger(long userId,long psgId){
+        userToPassengerDao.deleteUserToPassenger(userId,psgId);
+        passengerDao.delPassengerBy(psgId);
+        return true;
+    }
 }

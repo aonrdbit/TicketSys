@@ -6,4 +6,7 @@
     <insert id="insertOrderToPassenger" parameterType="com.zxc.ticketsys.model.OrderToPassenger">
         insert into order_passenger values(#{orId},#{psgId},#{seNo});
     </insert>
+    <select id="selectPsgByOrId" parameterType="java.lang.Long" resultType="com.zxc.ticketsys.model.OrderToPassenger">
+        select * from order_passenger where orId=#{orId};
+    </select>
 </mapper>

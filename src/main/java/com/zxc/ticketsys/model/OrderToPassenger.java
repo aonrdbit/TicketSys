@@ -7,6 +7,7 @@ public class OrderToPassenger {
     private long orId;
     private long psgId;
     private String seNo;
+    private int status;
 
     public OrderToPassenger(long orId, long psgId, String seNo) {
         this.orId = orId;

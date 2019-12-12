@@ -8,4 +8,6 @@ import java.util.Date;
 @Mapper
 public interface TrainDao {
     public Long selectTrIdByTrNoAndDate(@Param("trNo") String trNo,@Param("date") Date date);
+    public String selectTrNoByTrId(long trId);
+    public Date selectDateByTrId(long trId);
 }

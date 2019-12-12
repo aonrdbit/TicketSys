@@ -9,4 +9,7 @@
     <insert id="insertUserToPassenger" parameterType="com.zxc.ticketsys.model.UserToPassenger">
         insert into user_passenger(userId,psgId) values(#{userId},#{psgId});
     </insert>
+    <delete id="deleteUserToPassenger" parameterType="java.lang.Long">
+        delete from user_passenger where userId=#{userId} and psgId=#{psgId};
+    </delete>
 </mapper>

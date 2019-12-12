@@ -10,4 +10,5 @@ import java.util.List;
 public interface UserToPassengerDao {
     public List<Long> selectPassengerByUserId(long userId);
     public int insertUserToPassenger(UserToPassenger userToPassenger);
+    public int deleteUserToPassenger(Long userId,Long psgId);
 }

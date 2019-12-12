@@ -11,4 +11,5 @@ public interface PassengerDao {
     public int selectCountID(String ID);
     public Passenger selectPassengerInfoByPsgId(long psgId);
     public long selectPsgIdByID(String ID);
+    public int delPassengerBy(Long psgId);
 }
