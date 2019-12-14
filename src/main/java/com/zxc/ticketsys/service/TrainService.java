@@ -115,8 +115,7 @@ public class TrainService {
         //查该trId的每个座位status为1是哪些段
         for(int len=Constant.seNos.size(),i=0;i<len;i++){
             String s=Constant.seNos.get(i);
-            TrainToSeat trainToSeat=new TrainToSeat(trId,s,0);
-            trainToSeat.setStatus(1);
+            TrainToSeat trainToSeat=new TrainToSeat(trId,s,0,1);
             List<Integer> list=trainToSeatDao.selectIdxByTrIdAndSeNo(trId,s);
             for(int j=seIdx;j<=edIdx;j++){
                 if(!list.contains(j)){

@@ -13,6 +13,6 @@
         select idx from train_seat where trId=#{trId} and seNo=#{seNo} and status=1 ;
     </select>
     <update id="updateTrainToSeat" parameterType="com.zxc.ticketsys.model.TrainToSeat">
-        update train_seat set status=0 where trId=#{trId} and seNo=#{seNo} and idx=#{idx};
+        update train_seat set status=#{status} where trId=#{trId} and seNo=#{seNo} and idx=#{idx};
     </update>
 </mapper>

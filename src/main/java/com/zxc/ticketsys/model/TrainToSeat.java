@@ -9,10 +9,11 @@ public class TrainToSeat {
     private int idx;
     private int status;
 
-    public TrainToSeat(long trId, String seNo, int idx) {
+    public TrainToSeat(long trId, String seNo, int idx,int status) {
         this.trId = trId;
         this.seNo = seNo;
         this.idx = idx;
+        this.status=status;
     }
 }
 

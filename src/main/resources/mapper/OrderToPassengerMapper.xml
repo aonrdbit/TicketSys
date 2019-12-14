@@ -4,9 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zxc.ticketsys.dao.OrderToPassengerDao">
     <insert id="insertOrderToPassenger" parameterType="com.zxc.ticketsys.model.OrderToPassenger">
-        insert into order_passenger values(#{orId},#{psgId},#{seNo});
+        insert into order_passenger(orId,psgId,seNo) values(#{orId},#{psgId},#{seNo});
     </insert>
     <select id="selectPsgByOrId" parameterType="java.lang.Long" resultType="com.zxc.ticketsys.model.OrderToPassenger">
         select * from order_passenger where orId=#{orId};
     </select>
+    <update id="updateStatusSetFour" parameterType="java.lang.Long">
+        update order_passenger set status=4 where orId=#{orId} and psgId=#{psgId};
+    </update>
 </mapper>

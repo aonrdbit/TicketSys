@@ -39,7 +39,8 @@ public class OrderService {
         Order order=new Order(trId,st,ed,tot);
         System.out.println(order);
         //order
-        Long orId=orderDao.insertOrder(order);
+        orderDao.insertOrder(order);
+        long orId=order.getOrId();
         //order_passenger
         for(int i=0,len=psgIds.size();i<len;i++){
             HashMap<String,Object> hs=psgIds.get(i);
@@ -53,7 +54,7 @@ public class OrderService {
             HashMap<String,Object> hs=psgIds.get(i);
             for(int j=seIdx;j<=edIdx;j++){
                 System.out.println(trId+" "+hs.get("seNo")+" "+j);
-                TrainToSeat trainToSeat=new TrainToSeat(trId,hs.get("cx")+"-"+hs.get("zw"),j);
+                TrainToSeat trainToSeat=new TrainToSeat(trId,hs.get("cx")+"-"+hs.get("zw"),j,0);
                 trainToSeatDao.updateTrainToSeat(trainToSeat);
             }
         }
@@ -63,6 +64,11 @@ public class OrderService {
         return true;
     }
 
+    /**
+     * 查询订单列表
+     * @param userId
+     * @return
+     */
     public List<HashMap<String,Object>> queryAllOrder(long userId){
         List<Order> list=orderDao.selectAllOrderByUserId(userId);
         int len=list.size();
@@ -77,7 +83,7 @@ public class OrderService {
             hs.put("trNo",trNo);
             hs.put("st",st);
             hs.put("ed",o.getEdSta());
-            hs.put("st_date",trainDao.selectDateByTrId(trId));
+            hs.put("st_date",trainDao.selectDateByTrId(trId).toString());
             hs.put("st_time",viaDao.selectTimeByTrNoAndSt(trNo,st));
             List<OrderToPassenger> os=orderToPassengerDao.selectPsgByOrId(orId);
             List<HashMap<String,Object>> ss=new ArrayList<>();
@@ -101,5 +107,18 @@ public class OrderService {
             ans.add(hs);
         }
         return ans;
+    }
+
+    /**
+     * 退票
+     * order_passenger status改为4
+     * train_seat 设为1
+     * 订单信息不用改
+     * @return
+     */
+    public boolean delTicket(long orId,long psgId){
+        orderToPassengerDao.updateStatusSetFour(orId,psgId);
+        trainToSeatDao.updateTrainToSeat(null);
+        return true;
     }
 }
