@@ -15,4 +15,10 @@
     <update id="updateTrainToSeat" parameterType="com.zxc.ticketsys.model.TrainToSeat">
         update train_seat set status=#{status} where trId=#{trId} and seNo=#{seNo} and idx=#{idx};
     </update>
+    <insert id="insertTrainToSeat" parameterType="com.zxc.ticketsys.model.TrainToSeat">
+        insert into train_seat(trId,seNo,idx,status) values(#{trId},#{seNo},#{idx},#{status});
+    </insert>
+    <insert id="test" parameterType="com.zxc.ticketsys.model.Seat">
+        insert into seat values(#{seNo},#{seLev});
+    </insert>
 </mapper>

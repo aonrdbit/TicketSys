@@ -1,5 +1,6 @@
 package com.zxc.ticketsys.dao;
 
+import com.zxc.ticketsys.model.Via;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Property;
@@ -17,4 +18,5 @@ public interface ViaDao {
     public Double selectSecPriceByTrNoAndSt(String trNo,String st);
     public Integer selectIdxByTrNoAndSt(String trNo,String st);
     public Integer selectIdxByTrNoAndEd(String trNo,String ed);
+    public int insertVia(Via via);
 }

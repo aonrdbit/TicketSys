@@ -11,5 +11,5 @@ public interface TrainDao {
     public Long selectTrIdByTrNoAndDate(@Param("trNo") String trNo,@Param("date") Date date);
     public String selectTrNoByTrId(long trId);
     public Date selectDateByTrId(long trId);
-    public int addTrain(Train train);
+    public int insertTrain(Train train);
 }

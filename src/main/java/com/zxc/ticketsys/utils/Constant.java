@@ -1,6 +1,10 @@
 package com.zxc.ticketsys.utils;
 
+import com.zxc.ticketsys.dao.TrainToSeatDao;
 import com.zxc.ticketsys.model.TrainToSeat;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,11 +14,11 @@ import java.util.*;
 public class Constant {
     public static List<String> seNos=new ArrayList<>();
     public static char[] abcef=new char[]{'A','B','C','E','F'};
-    public static int sz=40;
+    public static int sz=20;
     public static List<Date> dates=new ArrayList<>();
     static{
         for(int i=1;i<=4;i++){
-            for(int j=1;j<=8;j++){
+            for(int j=1;j<=4;j++){
                 String s="0"+i+"-";
                 if(j<10){
                     s+="0";
@@ -23,7 +27,9 @@ public class Constant {
                 for(int k=0;k<5;k++){
                     seNos.add(s+abcef[k]);
                 }
+
             }
+
         }
         DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -35,7 +41,7 @@ public class Constant {
         }
         Date m= null;
         try {
-            m = dateFormat1.parse("2020-01-05");
+            m = dateFormat1.parse("2020-01-06");
         } catch (ParseException e) {
             e.printStackTrace();
         }

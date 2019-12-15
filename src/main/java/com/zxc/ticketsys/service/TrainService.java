@@ -7,6 +7,7 @@ import com.zxc.ticketsys.dao.ViaDao;
 import com.zxc.ticketsys.model.Station;
 import com.zxc.ticketsys.model.Train;
 import com.zxc.ticketsys.model.TrainToSeat;
+import com.zxc.ticketsys.model.Via;
 import com.zxc.ticketsys.utils.ComUtil;
 import com.zxc.ticketsys.utils.Constant;
 import org.apache.tomcat.util.bcel.Const;
@@ -162,9 +163,44 @@ public class TrainService {
      */
     @Transactional
     public boolean addTrain(HashMap<String,Object> hs){
-        System.out.println(Constant.dates);
+        System.out.println(hs);
+        String trNo=(String)hs.get("trNo");
+        List<HashMap<String,Object>> ls= (List<HashMap<String, Object>>) hs.get("list");
+        int idx=ls.size();
+        Train train=new Train();
         for(Date d: Constant.dates){
-
+            train.setTrNo(trNo);
+            train.setTrDate(d);
+            System.out.println("tarin"+train);
+            trainDao.insertTrain(train);
+            long trId=train.getTrId();
+            TrainToSeat trainToSeat=new TrainToSeat();
+            trainToSeat.setStatus(1);
+            trainToSeat.setTrId(trId);
+            for(int j=0,len=4*Constant.sz;j<len;j++){
+                for(int k=1;k<=idx;k++){
+                    trainToSeat.setSeNo(Constant.seNos.get(j));
+                    trainToSeat.setIdx(k);
+                    System.out.println("trainToSeat"+trainToSeat);
+                    trainToSeatDao.insertTrainToSeat(trainToSeat);
+                }
+            }
+        }
+        for(int i=0;i<idx;i++){
+            HashMap<String,Object> h=ls.get(i);
+            String stationA= (String) h.get("stationA");
+            String stationB= (String) h.get("stationB");
+            int id= (int) h.get("idx");
+            String staTime=(String)h.get("staTime");
+            String arrTime=(String)h.get("arrTime");
+            Time sta=Time.valueOf(staTime+":00");
+            Time arr=Time.valueOf(arrTime+":00");
+            int dwellTime=Integer.parseInt((String)h.get("dwellTime"));
+            double firPrice=Double.parseDouble((String)h.get("firPrice"));
+            double secPrice=Double.parseDouble((String)h.get("secPrice"));
+            Via via=new Via(trNo,stationA,stationB,id,sta,arr,dwellTime,firPrice,secPrice);
+            viaDao.insertVia(via);
+            System.out.println("via"+via);
         }
         return true;
     }

@@ -12,7 +12,7 @@
     <select id="selectDateByTrId" parameterType="java.lang.Long" resultType="java.util.Date">
         select trDate from train where trId=#{trId};
     </select>
-    <insert id="addTrain" useGeneratedKeys="true" keyProperty="trId" parameterType="com.zxc.ticketsys.model.Train">
+    <insert id="insertTrain" useGeneratedKeys="true" keyProperty="trId" parameterType="com.zxc.ticketsys.model.Train">
         insert into train(trNo,trDate) values(#{trNo},#{trDate})
     </insert>
 </mapper>

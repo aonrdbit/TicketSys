@@ -13,4 +13,6 @@ public interface TrainToSeatDao {
     public List<Integer> selectIdxByTrIdAndSeNo(@Param("trId") long trId,
                                                 @Param("seNo") String seNo);
     public int updateTrainToSeat(TrainToSeat trainToSeat);
+    public int insertTrainToSeat(TrainToSeat trainToSeat);
+    public int test(@Param("seNo")String seNo,@Param("seLev")int seLev);
 }

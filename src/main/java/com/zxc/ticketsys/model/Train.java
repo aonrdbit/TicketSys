@@ -9,4 +9,6 @@ public class Train {
     private long trId;
     private String trNo;
     private Date trDate;
+
+
 }

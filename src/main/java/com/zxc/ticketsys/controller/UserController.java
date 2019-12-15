@@ -2,10 +2,13 @@ package com.zxc.ticketsys.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.zxc.ticketsys.dao.TrainToSeatDao;
 import com.zxc.ticketsys.model.Passenger;
 import com.zxc.ticketsys.model.User;
 import com.zxc.ticketsys.service.UserService;
+import com.zxc.ticketsys.utils.Constant;
 import com.zxc.ticketsys.utils.TokenUtil;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +22,8 @@ public class UserController{
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private TrainToSeatDao trainToSeatDao;
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     @ResponseBody
