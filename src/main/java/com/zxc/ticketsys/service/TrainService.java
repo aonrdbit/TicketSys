@@ -9,8 +9,10 @@ import com.zxc.ticketsys.model.Train;
 import com.zxc.ticketsys.model.TrainToSeat;
 import com.zxc.ticketsys.utils.ComUtil;
 import com.zxc.ticketsys.utils.Constant;
+import org.apache.tomcat.util.bcel.Const;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Time;
 import java.text.Collator;
@@ -110,17 +112,25 @@ public class TrainService {
         //车厢座位都是固定的，只需重新设置trId和status(查询这个seNo是否在st到ed之间的status都为1)
         List<TrainToSeat> seats=new ArrayList<>();
         String trNo=trainDao.selectTrNoByTrId(trId);
-        int seIdx=viaDao.selectIdxByTrNoAndSt(trNo,st);
+        int stIdx=viaDao.selectIdxByTrNoAndSt(trNo,st);
         int edIdx=viaDao.selectIdxByTrNoAndEd(trNo,ed);
         //查该trId的每个座位status为1是哪些段
         for(int len=Constant.seNos.size(),i=0;i<len;i++){
             String s=Constant.seNos.get(i);
             TrainToSeat trainToSeat=new TrainToSeat(trId,s,0,1);
             List<Integer> list=trainToSeatDao.selectIdxByTrIdAndSeNo(trId,s);
-            for(int j=seIdx;j<=edIdx;j++){
-                if(!list.contains(j)){
-                    trainToSeat.setStatus(0);
+            int stt=-1;
+            for(int j=0,siz=list.size();j<siz;j++){
+                if(list.get(j)==stIdx){
+                    stt=j;
                     break;
+                }
+            }
+            if(stt==-1){
+                trainToSeat.setStatus(0);
+            }else{
+                if(list.get(stt+edIdx-stIdx)!=edIdx){
+                    trainToSeat.setStatus(0);
                 }
             }
             seats.add(trainToSeat);
@@ -130,9 +140,9 @@ public class TrainService {
             HashMap<String,Object> hs=new HashMap<>();
             hs.put("cx",i);
             ArrayList<HashMap<String,Object>> son=new ArrayList<>();
-            for(int j=1;j<=40;j++){
+            for(int j=1;j<=Constant.sz;j++){
                 HashMap<String,Object> ss=new HashMap<>();
-                TrainToSeat trainToSeat=seats.get((i-1)*40+j-1);
+                TrainToSeat trainToSeat=seats.get((i-1)*Constant.sz+j-1);
                 ss.put("seNo",trainToSeat.getSeNo());
                 ss.put("status",trainToSeat.getStatus()==0);
                 ss.put("check",false);
@@ -142,5 +152,20 @@ public class TrainService {
             list.add(hs);
         }
         return list;
+    }
+
+    /**
+     * 添加车次
+     * train train_seat via
+     * @param hs
+     * @return
+     */
+    @Transactional
+    public boolean addTrain(HashMap<String,Object> hs){
+        System.out.println(Constant.dates);
+        for(Date d: Constant.dates){
+
+        }
+        return true;
     }
 }

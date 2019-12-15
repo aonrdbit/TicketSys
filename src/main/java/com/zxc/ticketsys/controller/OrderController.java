@@ -34,7 +34,6 @@ public class OrderController {
         double tot=Double.parseDouble((String)para.get("tot"));
         String date=(String)para.get("date");
         ArrayList<HashMap<String,Object>> list=(ArrayList<HashMap<String,Object>>)para.get("psgs");
-        System.out.println(trId+" "+trNo+" "+st+" "+ed+" "+firPrice+" "+secPrice+" "+date);
         boolean check=orderService.addOrder(userId,trId,trNo,st,ed,tot,list);
         hs.put("msg",check+"");
         ObjectMapper objectMapper=new ObjectMapper();
@@ -55,10 +54,16 @@ public class OrderController {
 
     @RequestMapping("/del")
     public String delTicket(@RequestBody Map<String,Object> para)throws JsonProcessingException{
-
+        long orId=Long.parseLong((String)para.get("orId"));
+        long psgId=Long.parseLong((String)para.get("psgId"));
+        String seNo=(String)para.get("seNo");
+        String st=(String)para.get("st");
+        String ed=(String)para.get("ed");
+        orderService.delTicket(orId,psgId,seNo,st,ed);
         HashMap<String,Object> hs=new HashMap<>();
         hs.put("msg","true");
         ObjectMapper objectMapper=new ObjectMapper();
         return objectMapper.writeValueAsString(hs);
     }
+
 }

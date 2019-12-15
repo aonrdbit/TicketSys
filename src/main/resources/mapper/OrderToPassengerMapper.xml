@@ -12,4 +12,7 @@
     <update id="updateStatusSetFour" parameterType="java.lang.Long">
         update order_passenger set status=4 where orId=#{orId} and psgId=#{psgId};
     </update>
+    <select id="selectOrIdByPsgId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select orId from order_passenger where psgId=#{psgId};
+    </select>
 </mapper>

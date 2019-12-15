@@ -11,4 +11,5 @@ public interface OrderToPassengerDao {
     public int insertOrderToPassenger(OrderToPassenger orderToPassenger);
     public List<OrderToPassenger> selectPsgByOrId(Long orId);
     public int updateStatusSetFour(@Param("orId") Long orId,@Param("psgId")Long psgId);
+    public List<Long> selectOrIdByPsgId(Long psgId);
 }

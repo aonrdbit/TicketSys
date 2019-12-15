@@ -11,4 +11,6 @@ import java.util.List;
 public interface OrderDao {
     public Long insertOrder(Order order);
     public List<Order> selectAllOrderByUserId(@Param("userId") Long userId);
+    public Long selectTrIdByOrId(Long orId);
+    public Order selectOrderByOrId(Long orId);
 }

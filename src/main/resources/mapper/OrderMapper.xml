@@ -9,4 +9,10 @@
     <select id="selectAllOrderByUserId" resultType="com.zxc.ticketsys.model.Order">
         select * from `order` where orId in (select orId from user_order where userId=#{userId});
     </select>
+    <select id="selectTrIdByOrId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select trId from `order` where orId=#{orId};
+    </select>
+    <select id="selectOrderByOrId" parameterType="java.lang.Long" resultType="com.zxc.ticketsys.model.Order">
+        select * from `order` where orId=#{orId};
+    </select>
 </mapper>
