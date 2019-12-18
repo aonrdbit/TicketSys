@@ -37,10 +37,18 @@ public class AdminController {
 
     @RequestMapping("/train/add")
     public String addTrain(@RequestBody Map<String,Object> para) throws JsonProcessingException {
-        System.out.println(Constant.dates);
         HashMap<String,Object> par= (HashMap<String, Object>) para.get("train");
         trainService.addTrain(par);
-        System.out.println(par);
+        HashMap<String,Object> hs=new HashMap<>();
+        hs.put("msg","true");
+        ObjectMapper objectMapper=new ObjectMapper();
+        return objectMapper.writeValueAsString(hs);
+    }
+
+    @RequestMapping("/train/query")
+    public String queryTrain(@RequestBody Map<String,Object> para) throws JsonProcessingException {
+        String trNo=(String)para.get("trNo");
+        //search
         HashMap<String,Object> hs=new HashMap<>();
         hs.put("msg","true");
         ObjectMapper objectMapper=new ObjectMapper();

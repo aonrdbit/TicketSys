@@ -46,6 +46,8 @@ public class WebConfiguration implements WebMvcConfigurer {
         //排除拦截
         excludePath.add("/user/register");  //登录
         excludePath.add("/user/login");     //注册
+        excludePath.add("/train/station/all");
+        excludePath.add("/train/query");
         excludePath.add("/static/**");  //静态资源
         excludePath.add("/assets/**");  //静态资源
 
