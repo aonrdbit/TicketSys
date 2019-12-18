@@ -19,4 +19,6 @@ public interface ViaDao {
     public Integer selectIdxByTrNoAndSt(String trNo,String st);
     public Integer selectIdxByTrNoAndEd(String trNo,String ed);
     public int insertVia(Via via);
+    public List<Via> selectViaByTrNo(String trNo);
+    public Integer deleteViaByTrNo(String trNo);
 }

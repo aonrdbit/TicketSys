@@ -204,4 +204,28 @@ public class TrainService {
         }
         return true;
     }
+
+    public List<Via> queryTrainInfo(String trNo){
+        return viaDao.selectViaByTrNo(trNo);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean modTrainInfo(String trNo,List<HashMap<String,Object>> list){
+        viaDao.deleteViaByTrNo(trNo);
+        for(HashMap<String,Object> h:list){
+            String stationA= (String) h.get("stationA");
+            String stationB= (String) h.get("stationB");
+            int id= (int) h.get("idx");
+            String staTime=(String)h.get("staTime");
+            String arrTime=(String)h.get("arrTime");
+            Time sta=Time.valueOf(staTime);
+            Time arr=Time.valueOf(arrTime);
+            int dwellTime=(Integer)h.get("dwellTime");
+            double firPrice=Integer.parseInt(h.get("firPrice").toString())*1.0;
+            double secPrice=Integer.parseInt(h.get("secPrice").toString())*1.0;
+            Via via=new Via(trNo,stationA,stationB,id,sta,arr,dwellTime,firPrice,secPrice);
+            viaDao.insertVia(via);
+        }
+        return true;
+    }
 }

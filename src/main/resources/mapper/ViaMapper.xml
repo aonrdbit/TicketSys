@@ -30,4 +30,10 @@
     <insert id="insertVia" parameterType="com.zxc.ticketsys.model.Via">
         insert into via values(#{trNo},#{stationA},#{stationB},#{idx},#{staTime},#{arrTime},#{dwellTime},#{firPrice},#{secPrice});
     </insert>
+    <select id="selectViaByTrNo" parameterType="java.lang.String" resultType="com.zxc.ticketsys.model.Via">
+        select * from via where trNo=#{trNo} order by idx;
+    </select>
+    <select id="deleteViaByTrNo" parameterType="java.lang.String">
+        delete from via where trNo=#{trNo};
+    </select>
 </mapper>
