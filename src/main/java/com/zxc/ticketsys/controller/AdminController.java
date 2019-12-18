@@ -48,7 +48,7 @@ public class AdminController {
     @RequestMapping("/train/query")
     public String queryTrain(@RequestBody Map<String,Object> para) throws JsonProcessingException {
         String trNo=(String)para.get("trNo");
-        //search
+        //查出每一段的信息 渲染到form里直接修改
         HashMap<String,Object> hs=new HashMap<>();
         hs.put("msg","true");
         ObjectMapper objectMapper=new ObjectMapper();
