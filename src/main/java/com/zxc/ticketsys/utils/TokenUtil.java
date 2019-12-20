@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class TokenUtil {
 
-    private static final long EXPIRE_TIME= 10*60*60*1000;
+    private static final long EXPIRE_TIME= 15*60*1000;
     private static final String TOKEN_SECRET="txdy";  //密钥盐
 
     /**
