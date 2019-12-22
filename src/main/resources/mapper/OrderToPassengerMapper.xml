@@ -15,7 +15,7 @@
     <select id="selectOrIdByPsgId" parameterType="java.lang.Long" resultType="java.lang.Long">
         select orId from order_passenger where psgId=#{psgId};
     </select>
-    <select id="selectStatusByOrIdAndPsgId" parameterType="java.lang.Long">
+    <select id="selectStatusByOrIdAndPsgId" parameterType="java.lang.Long" resultType="java.lang.Integer">
         select status from order_passenger where orId=#{orId} and psgId=#{psgId};
     </select>
 </mapper>
