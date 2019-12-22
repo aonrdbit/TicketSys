@@ -1,6 +1,5 @@
 package com.zxc.ticketsys.service;
 
-import com.sun.org.apache.xpath.internal.operations.Or;
 import com.zxc.ticketsys.dao.*;
 import com.zxc.ticketsys.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +34,18 @@ public class OrderService {
      */
     @Transactional(rollbackFor = Exception.class)
     public boolean addOrder(long userId,long trId,String trNo,String st, String ed, Double tot, List<HashMap<String,Object>> psgIds){
+        //检查同一身份证购买多个同trId的票
+        for(int i=0,len=psgIds.size();i<len;i++){
+            HashMap<String, Object> psg=psgIds.get(i);
+            long psgId=Long.parseLong(psg.get("psgId").toString());
+            List<Long> ors=orderToPassengerDao.selectOrIdByPsgId(psgId);
+            for(int j=0,siz=ors.size();j<siz;j++){
+                Long trs=orderDao.selectTrIdByOrId(ors.get(j));
+                if(trs==trId){
+                    return false;
+                }
+            }
+        }
         Order order=new Order(trId,st,ed,tot);
         //order
         orderDao.insertOrder(order);

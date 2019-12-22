@@ -14,11 +14,11 @@ import java.util.*;
 public class Constant {
     public static List<String> seNos=new ArrayList<>();
     public static char[] abcef=new char[]{'A','B','C','E','F'};
-    public static int sz=20;
+    public static int sz=10;
     public static List<Date> dates=new ArrayList<>();
     static{
-        for(int i=1;i<=4;i++){
-            for(int j=1;j<=4;j++){
+        for(int i=1;i<=3;i++){
+            for(int j=1;j<=2;j++){
                 String s="0"+i+"-";
                 if(j<10){
                     s+="0";

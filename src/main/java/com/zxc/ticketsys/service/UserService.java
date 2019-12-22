@@ -117,4 +117,16 @@ public class UserService {
         passengerDao.delPassengerBy(psgId);
         return true;
     }
+
+    /**
+     * 修改密码
+     * @param username
+     * @param password
+     * @return
+     */
+    public boolean modPass(String username,String password){
+        password=MD5.encodeByMD5(password);
+        userDao.updateUserPass(username,password);
+        return true;
+    }
 }

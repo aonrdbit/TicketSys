@@ -84,8 +84,37 @@ public class TrainService {
             hs.put("st_time",st_time);
             hs.put("ed_time",ed_time);
             hs.put("dur", ComUtil.diffHour(st_time,ed_time));
-            hs.put("fir",trainToSeatDao.selectSeatCntByTrId(trId,1));
-            hs.put("sec",trainToSeatDao.selectSeatCntByTrId(trId,2));
+            int fir=0,sec=0;
+            int stIdx=viaDao.selectIdxByTrNoAndSt(trNo,st);
+            int edIdx=viaDao.selectIdxByTrNoAndEd(trNo,ed);
+            for(int len=Constant.seNos.size(),j=0;j<len;j++){
+                String s=Constant.seNos.get(j);
+                TrainToSeat trainToSeat=new TrainToSeat(trId,s,0,1);
+                List<Integer> lis=trainToSeatDao.selectIdxByTrIdAndSeNo(trId,s);
+                int stt=-1;
+                for(int k=0,sz=lis.size();k<sz;k++){
+                    if(lis.get(k)==stIdx){
+                        stt=k;
+                        break;
+                    }
+                }
+                if(stt==-1){
+                    trainToSeat.setStatus(0);
+                    continue;
+                }else{
+                    if(lis.get(stt+edIdx-stIdx)!=edIdx){
+                        trainToSeat.setStatus(0);
+                        continue;
+                    }
+                }
+                if(trainToSeat.getSeNo().substring(0,2).equals("01")){
+                    fir++;
+                }else{
+                    sec++;
+                }
+            }
+            hs.put("fir",fir);
+            hs.put("sec",sec);
             double firPrice=viaDao.selectFirPriceByTrNoAndSt(trNo,st);
             double secPrice=viaDao.selectSecPriceByTrNoAndSt(trNo,st);
             String temp_ed=viaDao.selectEdByTrNoAndSt(trNo,st);
@@ -137,7 +166,7 @@ public class TrainService {
             seats.add(trainToSeat);
         }
         ArrayList<HashMap<String,Object>> list=new ArrayList<>();
-        for(int i=1;i<=4;i++){
+        for(int i=1;i<=3;i++){
             HashMap<String,Object> hs=new HashMap<>();
             hs.put("cx",i);
             ArrayList<HashMap<String,Object>> son=new ArrayList<>();
@@ -177,7 +206,7 @@ public class TrainService {
             TrainToSeat trainToSeat=new TrainToSeat();
             trainToSeat.setStatus(1);
             trainToSeat.setTrId(trId);
-            for(int j=0,len=4*Constant.sz;j<len;j++){
+            for(int j=0,len=Constant.seNos.size();j<len;j++){
                 for(int k=1;k<=idx;k++){
                     trainToSeat.setSeNo(Constant.seNos.get(j));
                     trainToSeat.setIdx(k);

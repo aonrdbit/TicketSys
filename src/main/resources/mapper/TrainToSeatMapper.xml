@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zxc.ticketsys.dao.TrainToSeatDao">
     <select id="selectSeatCntByTrId" resultType="java.lang.Integer">
-        select count(*) from train_seat,seat where trId=#{trId} and train_seat.seNo=seat.seNo and seLev=#{lev} and status=1;
+        select count(distinct train_seat.seNo) from train_seat,seat where trId=#{trId} and train_seat.seNo=seat.seNo and seLev=#{lev} and status=1;
     </select>
     <select id="selectSeatByTrId" resultType="com.zxc.ticketsys.model.TrainToSeat">
         select * from train_seat where trId=#{trId};

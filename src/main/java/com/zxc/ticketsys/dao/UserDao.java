@@ -8,4 +8,5 @@ public interface UserDao {
     public String selectPassWordByUserName(String userName);
     public int insertUser(User user);
     public User selectUserByUserName(String userName);
+    public int updateUserPass(String username,String password);
 }

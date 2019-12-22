@@ -103,4 +103,26 @@ public class UserController{
         ObjectMapper objectMapper=new ObjectMapper();
         return objectMapper.writeValueAsString(hs);
     }
+
+    @RequestMapping(value = "/pass/mod",method = RequestMethod.POST)
+    @ResponseBody
+    public String modPass(@RequestBody Map<String,Object> para) throws JsonProcessingException {
+        String username=(String)para.get("userName");
+        String oldPass=(String)para.get("oldPass");
+        String newPass=(String)para.get("newPass");
+        boolean check=userService.checkUserPassWord(username,oldPass);
+        HashMap<String,Object> hs=new HashMap<>();
+        if(!check){
+            hs.put("msg","原密码错误");
+        }else{
+            boolean jud=userService.modPass(username,newPass);
+            if(jud){
+                hs.put("msg","修改成功");
+            }else{
+                hs.put("msg","网络或内部错误");
+            }
+        }
+        ObjectMapper objectMapper=new ObjectMapper();
+        return objectMapper.writeValueAsString(hs);
+    }
 }

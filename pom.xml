@@ -96,6 +96,12 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.52.sec06</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.1.21</version>
+        </dependency>
     </dependencies>
 
     <build>
