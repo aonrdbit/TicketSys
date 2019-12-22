@@ -40,6 +40,10 @@ public class OrderService {
             long psgId=Long.parseLong(psg.get("psgId").toString());
             List<Long> ors=orderToPassengerDao.selectOrIdByPsgId(psgId);
             for(int j=0,siz=ors.size();j<siz;j++){
+                int sta=orderToPassengerDao.selectStatusByOrIdAndPsgId(ors.get(j),psgId);
+                if(sta==4){
+                    continue;
+                }
                 Long trs=orderDao.selectTrIdByOrId(ors.get(j));
                 if(trs==trId){
                     return false;
