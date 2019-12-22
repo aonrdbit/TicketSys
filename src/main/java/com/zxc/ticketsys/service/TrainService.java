@@ -87,6 +87,9 @@ public class TrainService {
             int fir=0,sec=0;
             int stIdx=viaDao.selectIdxByTrNoAndSt(trNo,st);
             int edIdx=viaDao.selectIdxByTrNoAndEd(trNo,ed);
+            if(stIdx>edIdx){
+                continue;
+            }
             for(int len=Constant.seNos.size(),j=0;j<len;j++){
                 String s=Constant.seNos.get(j);
                 TrainToSeat trainToSeat=new TrainToSeat(trId,s,0,1);
