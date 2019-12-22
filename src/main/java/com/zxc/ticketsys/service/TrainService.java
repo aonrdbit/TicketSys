@@ -132,7 +132,7 @@ public class TrainService {
 
     /**
      * 查询座位信息
-     * //慢的一比。。
+     * //慢
      * @param trId
      * @param st
      * @param ed

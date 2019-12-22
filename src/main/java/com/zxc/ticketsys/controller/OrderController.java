@@ -29,10 +29,7 @@ public class OrderController {
         String trNo=(String)para.get("trNo");
         String st=(String)para.get("st");
         String ed=(String)para.get("ed");
-        double firPrice=Double.parseDouble((String)para.get("firPrice"));
-        double secPrice=Double.parseDouble((String)para.get("secPrice"));
         double tot=Double.parseDouble((String)para.get("tot"));
-        String date=(String)para.get("date");
         ArrayList<HashMap<String,Object>> list=(ArrayList<HashMap<String,Object>>)para.get("psgs");
         boolean check=orderService.addOrder(userId,trId,trNo,st,ed,tot,list);
         hs.put("msg",check+"");
