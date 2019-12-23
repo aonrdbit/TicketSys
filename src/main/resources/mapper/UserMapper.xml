@@ -6,7 +6,7 @@
     <select id="selectPassWordByUserName" resultType="java.lang.String" parameterType="java.lang.String">
         select passWord from `user` where userName=#{userName};
     </select>
-    <insert id="insertUser" parameterType="com.zxc.ticketsys.model.User">
+    <insert id="insertUser" parameterType="com.zxc.ticketsys.model.User" useGeneratedKeys="true" keyProperty="userId">
         insert into `user`(userName,passWord) values(#{userName},#{passWord});
     </insert>
     <select id="selectUserByUserName" parameterType="java.lang.String" resultType="com.zxc.ticketsys.model.User">

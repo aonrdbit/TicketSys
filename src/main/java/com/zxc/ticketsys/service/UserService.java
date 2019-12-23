@@ -58,11 +58,16 @@ public class UserService {
     @Transactional(rollbackFor = Exception.class)
     public boolean registerUser(String username,String password,String name,String ID,String phone){
         password=MD5.encodeByMD5(password);
-        userDao.insertUser(new User(username,password));
+        User user=new User(username,password);
+        userDao.insertUser(user);
+        Long userId=user.getUserId();
         int x=passengerDao.selectCountID(ID);
         if(x==0){
-            passengerDao.insertPassenger(new Passenger(name, ID, phone));
+            Passenger psg=new Passenger(name,ID,phone);
+            passengerDao.insertPassenger(psg);
         }
+        Long psgId=passengerDao.selectPsgIdByID(ID);
+        userToPassengerDao.insertUserToPassenger(new UserToPassenger(userId,psgId));
         return true;
     }
 

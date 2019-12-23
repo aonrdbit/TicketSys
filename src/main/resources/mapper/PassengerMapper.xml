@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zxc.ticketsys.dao.PassengerDao">
-    <insert id="insertPassenger" parameterType="com.zxc.ticketsys.model.Passenger">
+    <insert id="insertPassenger" parameterType="com.zxc.ticketsys.model.Passenger" useGeneratedKeys="true" keyProperty="psgId">
         insert into passenger(Name,ID,phone) values(#{Name},#{ID},#{phone})
     </insert>
     <select id="selectCountID" parameterType="java.lang.String" resultType="java.lang.Integer">
