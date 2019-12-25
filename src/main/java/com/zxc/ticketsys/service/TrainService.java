@@ -252,7 +252,7 @@ public class TrainService {
             String arrTime=(String)h.get("arrTime");
             Time sta=Time.valueOf(staTime);
             Time arr=Time.valueOf(arrTime);
-            int dwellTime=(Integer)h.get("dwellTime");
+            int dwellTime=Integer.parseInt((String)h.get("dwellTime"));
             double firPrice=Integer.parseInt(h.get("firPrice").toString())*1.0;
             double secPrice=Integer.parseInt(h.get("secPrice").toString())*1.0;
             Via via=new Via(trNo,stationA,stationB,id,sta,arr,dwellTime,firPrice,secPrice);
