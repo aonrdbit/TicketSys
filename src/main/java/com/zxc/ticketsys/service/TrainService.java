@@ -36,18 +36,18 @@ public class TrainService {
      */
     public List<HashMap<String,Object>> queryAllStation(){
         List<HashMap<String,Object>> ans=new ArrayList<>();
-        List<Station> list=stationDao.selectAllStation();
-        Collections.sort(list, new Comparator<Station>() {
+        List<String> list=viaDao.selectStation();
+        Collections.sort(list, new Comparator<String>() {
             @Override
-            public int compare(Station o1, Station o2) {
+            public int compare(String o1, String o2) {
                 Comparator<Object> com = Collator.getInstance(java.util.Locale.CHINA);
-                return com.compare(o1.getStaName(), o2.getStaName());
+                return com.compare(o1, o2);
             }
         });
         for(int i=0;i<list.size();i++){
             HashMap<String,Object> hs=new HashMap<>();
             hs.put("value",i+1);
-            hs.put("label",list.get(i).getStaName());
+            hs.put("label",list.get(i));
             ans.add(hs);
         }
         return ans;
@@ -73,7 +73,10 @@ public class TrainService {
         int siz=trNos.size();
         for(int i=0;i<siz;i++){
             String trNo=trNos.get(i);
-            long trId=trainDao.selectTrIdByTrNoAndDate(trNo,date);
+            Long trId=trainDao.selectTrIdByTrNoAndDate(trNo,date);
+            if(trId==null){
+                continue;
+            }
             HashMap<String,Object> hs=new HashMap<>();
             hs.put("trNo",trNos.get(i));
             hs.put("trId",trId);
@@ -87,6 +90,7 @@ public class TrainService {
             int fir=0,sec=0;
             int stIdx=viaDao.selectIdxByTrNoAndSt(trNo,st);
             int edIdx=viaDao.selectIdxByTrNoAndEd(trNo,ed);
+            System.out.println(stIdx+" "+edIdx);
             if(stIdx>edIdx){
                 continue;
             }
@@ -94,6 +98,7 @@ public class TrainService {
                 String s=Constant.seNos.get(j);
                 TrainToSeat trainToSeat=new TrainToSeat(trId,s,0,1);
                 List<Integer> lis=trainToSeatDao.selectIdxByTrIdAndSeNo(trId,s);
+                System.out.println(lis);
                 int stt=-1;
                 for(int k=0,sz=lis.size();k<sz;k++){
                     if(lis.get(k)==stIdx){
@@ -225,8 +230,8 @@ public class TrainService {
             int id= (int) h.get("idx");
             String staTime=(String)h.get("staTime");
             String arrTime=(String)h.get("arrTime");
-            Time sta=Time.valueOf(staTime+":00");
-            Time arr=Time.valueOf(arrTime+":00");
+            Time sta=Time.valueOf(staTime);
+            Time arr=Time.valueOf(arrTime);
             int dwellTime=Integer.parseInt((String)h.get("dwellTime"));
             double firPrice=Double.parseDouble((String)h.get("firPrice"));
             double secPrice=Double.parseDouble((String)h.get("secPrice"));
@@ -241,6 +246,12 @@ public class TrainService {
         return viaDao.selectViaByTrNo(trNo);
     }
 
+    /**
+     * bug  修改车次信息的时候如何处理座位
+     * @param trNo
+     * @param list
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     public boolean modTrainInfo(String trNo,List<HashMap<String,Object>> list){
         viaDao.deleteViaByTrNo(trNo);
@@ -253,8 +264,8 @@ public class TrainService {
             Time sta=Time.valueOf(staTime);
             Time arr=Time.valueOf(arrTime);
             int dwellTime=Integer.parseInt((String)h.get("dwellTime"));
-            double firPrice=Integer.parseInt(h.get("firPrice").toString())*1.0;
-            double secPrice=Integer.parseInt(h.get("secPrice").toString())*1.0;
+            double firPrice=Double.parseDouble(h.get("firPrice").toString());
+            double secPrice=Double.parseDouble(h.get("secPrice").toString());
             Via via=new Via(trNo,stationA,stationB,id,sta,arr,dwellTime,firPrice,secPrice);
             viaDao.insertVia(via);
         }

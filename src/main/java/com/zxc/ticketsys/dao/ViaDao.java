@@ -21,4 +21,5 @@ public interface ViaDao {
     public int insertVia(Via via);
     public List<Via> selectViaByTrNo(String trNo);
     public Integer deleteViaByTrNo(String trNo);
+    public List<String> selectStation();
 }

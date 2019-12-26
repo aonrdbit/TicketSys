@@ -36,4 +36,7 @@
     <select id="deleteViaByTrNo" parameterType="java.lang.String">
         delete from via where trNo=#{trNo};
     </select>
+    <select id="selectStation" resultType="java.lang.String">
+        select distinct staTionA from via union select distinct stationB from via;
+    </select>
 </mapper>

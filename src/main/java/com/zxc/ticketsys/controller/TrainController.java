@@ -39,6 +39,7 @@ public class TrainController {
         String ed=(String)para.get("ed");
         String date= (String) para.get("date");
         List list=trainService.querySpeTrain(st,ed,ComUtil.strToDate(date));
+        System.out.println("tr: "+list);
         HashMap<String,Object> hs=new HashMap<>();
         hs.put("msg","true");
         hs.put("list",list);
